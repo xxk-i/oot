@@ -100,6 +100,9 @@ If you are using GCC as the compiler for Ocarina of Time, you will also need:
 
 * gcc-mips-linux-gnu
 
+Alternatively, if you have guix installed you can just use this command:
+`guix shell --container --manifest=manifest.scm -F --network`
+
 #### 2. Clone the repository
 
 **N.B.** If using WSL, we strongly encourage you to clone into WSL's Linux filesystem using Linux's `git`.
