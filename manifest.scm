@@ -3,55 +3,8 @@
              (guix build-system gnu)
              (guix licenses))
 
+;; binutils with some extra config flags to target mips-linux-gnu
 (define mips-linux-gnu
-    (package
-        (name "mips-linux-gnu")
-        (version "2.39")
-        (source (origin
-                (method url-fetch)
-                (uri (string-append "https://ftp.gnu.org/gnu/binutils/binutils-" version ".tar.bz2"))
-                (sha256
-                (base32
-                    "0j31n6vk73x2zxpghxsk99hw4ld8vrpz0b844kfh4092xx7sh96s"))))
-        (build-system gnu-build-system)
-        (arguments
-            (list
-                #:configure-flags #~'(
-                    "--target=mips-linux-gnu"
-                    "--disable-multilib"
-                    "--with-gnu-as"
-                    "--with-gnu-ld"
-                    "--disable-nls"
-                    "--enable-plugins"
-                    "--enable-deterministic-archives")
-                #:make-flags #~'("MAKEINFO=true")))
-        (synopsis "mips-binutils")
-        (description
-    "GNU Binutils is a collection of tools for working with binary files.
-Perhaps the most notable are \"ld\", a linker, and \"as\", an assembler.
-Other tools include programs to display binary profiling information, list
-the strings in a binary file, and utilities for working with archives.  The
-\"bfd\" library for working with executable and object formats is also
-included.")
-        (home-page "https://www.gnu.org/software/binutils/")
-        (license gpl3+)))
-
-; (use-modules (guix packages)
-;              (gnu packages gdb)               ;for 'gdb'
-;              (gnu packages version-control))  ;for 'git'
-
-; ;; Define a variant of GDB without a dependency on Guile.
-; (define gdb-sans-guile
-;   (package
-;     (inherit gdb)
-;     (inputs (modify-inputs (package-inputs gdb)
-;               (delete "guile")))))
-
-; ;; Return a manifest containing that one package plus Git.
-; (packages->manifest (list gdb-sans-guile git))
-
-
-(define mips-linux-gnu-test
     (package
         (inherit binutils)
         (arguments
@@ -66,6 +19,7 @@ included.")
                     "--enable-deterministic-archives")
                 #:make-flags #~'("MAKEINFO=true")))))
 
+;; custom defined liblzma as its not available in the guix package definitions
 (define liblzma 
     (package
         (name "liblzma")
@@ -96,7 +50,7 @@ included.")
             "glibc-locales"
             "nss-certs"
 
-            ;; Common command line tools lest the container is too empty.
+            ;; CLIs
             "coreutils"
             "findutils"
             "grep"
@@ -105,10 +59,11 @@ included.")
             "sed"
             "tar"
             "gzip"
-
             "git"
             "texinfo"
             "which"
+
+            ;; build things
             "make"
             "pkg-config"
             "curl"
@@ -126,13 +81,4 @@ included.")
             searched-packages
             local-packages)))
 
-; (define my-packages2)
-;     (append
-;         (list
-;             (packages->manifest
-;                 (list liblzma))
-;             (my-packages1->entries)))
-; (packages->manifest (list liblzma python))
-
-; (packages->manifest (list liblzma))
 all-packages

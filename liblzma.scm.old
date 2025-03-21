@@ -1,0 +1,19 @@
+(use-modules (guix packages)
+             (guix download)
+             (guix build-system gnu)
+             (guix licenses))
+
+(package
+    (name "liblzma")
+    (version "5.6.4")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/tukaani-project/xz/releases/download/v" version "/xz-" version ".tar.gz"))
+              (sha256
+               (base32
+                "16z0yp6rlqnvqvnirjgmihab59wrq56h30lrhha37g9ca4p3z7i6"))))
+    (build-system gnu-build-system)
+    (synopsis "XZ Utils")
+    (description "XZ Utils is free general-purpose data compression software with a high compression ratio.")
+    (home-page "https://tukaani.org/xz/")
+    (license gpl2+))
