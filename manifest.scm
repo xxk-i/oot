@@ -40,7 +40,7 @@
     (packages->manifest
         (list
             liblzma
-            mips-linux-gnu-test)))
+            mips-linux-gnu)))
 
 (define searched-packages
     (specifications->manifest
