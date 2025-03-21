@@ -100,7 +100,7 @@ If you are using GCC as the compiler for Ocarina of Time, you will also need:
 
 * gcc-mips-linux-gnu
 
-Alternatively, if you have guix installed you can just use this command:
+#### Alternatively, if you have guix installed you can just use this command:
 
 `guix shell --container --manifest=manifest.scm -F --network`
 
